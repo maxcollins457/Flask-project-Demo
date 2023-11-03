@@ -1,0 +1,86 @@
+{% extends "base-template.html" %}
+
+{% block title %}Weather Forecast{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% if location %}
+            <h1 class="text-center mb-4">Weather Report</h1>
+
+            <div class="container">
+                <img src="{{ city_image_url }}" alt="Cityscape" class="cityscape-image">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card mb-4 current-weather-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Location</h5>
+                                <p class="card-text">{{ location|capitalize }}</p>
+                                <a href="/weather-form" class="btn btn-primary">Change Location</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card mb-4 current-weather-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Current Temperature:</h5>
+                                <p class="card-text">{{ weather_data.temp }}°C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card mb-4 current-weather-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Feels Like:</h5>
+                                <p class="card-text">{{ weather_data.feels_like }}°C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card mb-4 current-weather-card">
+                            <img src="{{ icon_url }}" alt="Weather Icon" class="weather-icon">
+                            <div class="card-body">
+                                <h5 class="card-title">Current Condition:</h5>
+                                <p class="card-text">{{ condition | capitalize }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        <img src="{{ url_for('static', filename='img/temperature_graph.png') }}" alt="Temperature vs. Time" class="temperature-graph">
+        <h1>Upcoming Weather</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Temperature (°C)</th>
+                    <th>Feels Like (°C)</th>
+                    <th>Min Temperature (°C)</th>
+                    <th>Max Temperature (°C)</th>
+                    <th>Weather Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in times_and_temps(location) %}
+                <tr>
+                    <td>{{ data[0] }}</td>
+                    <td>{{ data[1] }}</td>
+                    <td>{{ data[2] }}</td>
+                    <td>{{ data[3] }}</td>
+                    <td>{{ data[4] }}</td>
+                    <td>{{ data[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <h1>No Location Selected</h1>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endblock main %}

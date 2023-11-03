@@ -1,0 +1,24 @@
+{% extends "base-template.html" %}
+
+{% block title %}Weather{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Enter a city name:</h1>
+            <form method="POST" onsubmit="return validateForm();">
+                {% if error_message %}
+                <p class="text-danger">{{ error_message }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" name="location" id="location" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock main %}
